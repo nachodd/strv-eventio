@@ -1,0 +1,34 @@
+/*********************
+VARIABLES
+*********************/
+
+$red: #cc4e46;
+$pale: #ede6dc;
+$lightpale: #f2ece5;
+$paleborder: #eee7dd;
+$palefootertext: #d2d0c2;
+$modulebackground: #d0cdc4;
+$dark: #333;
+
+
+/*********************
+BREAKPOINTS
+*********************/
+
+@mixin breakpoint($point) {
+  @if $point == 'XLARGE' {
+    @media (max-width: 1300px) { @content ; }
+  }
+  @if $point == 'LARGE' {
+    @media (max-width: 1150px) { @content ; }
+  }
+  @else if $point == 'MEDIUM' {
+    @media (max-width: 960px) { @content ; }
+  }
+  @else if $point == 'SMALL' {
+    @media (min-width: 530px)  { @content ; }
+  }
+  @else if $point == 'XSMALL' {
+    @media (max-width: 530px)  { @content ; }
+  }
+}

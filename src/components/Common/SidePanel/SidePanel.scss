@@ -1,0 +1,41 @@
+@import '@assets/styles/global.scss';
+
+.sidePanel {
+  background-image: url('../../../assets/images/trooperSideBackground.png');
+  background-color: #323c46;
+  background-size: cover;
+  width: 372px;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  z-index: -1;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+
+  @include breakpoint('MEDIUM') {
+    display: none;
+  }
+
+  .quoteContainer {
+    margin-bottom: 65px;
+    align-self: center;
+    width: 70%;
+  }
+  .quote {
+    color: #fff;
+    font-family: "Playfair Display", sans-serif;
+    font-size: 30px;
+  }
+  .quoteSeparator {
+    background: #1be38b;
+    width: 12px;
+    height: 3px;
+    margin: 20px auto;
+  }
+  .quoteAuthor {
+    font-size: 16px;
+    color: #949ea8;
+  }
+}

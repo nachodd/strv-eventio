@@ -1,0 +1,30 @@
+@import '@assets/styles/global.scss';
+
+.button {
+  border-radius: 5px;
+  border: none;
+  width: 240px;
+  height: 60px;
+  margin: 20px 0;
+  font-size: 15px;
+  font-family: "Hind", sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+
+  @include breakpoint('MEDIUM') {
+    margin: 20px auto;
+  }
+
+  &.refresh {
+    background: #323c46;
+  }
+
+  a {
+    display: block;
+    height: 100%;
+    line-height: 60px;
+    color: #fff;
+  }
+}

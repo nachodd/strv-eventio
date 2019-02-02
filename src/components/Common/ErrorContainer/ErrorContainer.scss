@@ -1,0 +1,46 @@
+@import '@assets/styles/global.scss';
+
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  margin-left: 577px;
+  text-align: left;
+
+  @include breakpoint('LARGE') {
+    width: 100%;
+    margin-left: initial;
+  }
+
+  .cont {
+    @include breakpoint('LARGE') {
+      align-self: flex-end;
+      margin-right: 50px;
+    }
+    @include breakpoint('MEDIUM') {
+      align-self: center;
+      margin-right: initial;
+      text-align: center;
+    }
+  }
+
+  .title {
+    color: #323c46;
+    font-size: 26px;
+    @include breakpoint('MEDIUM') {
+      text-align: center;
+    }
+  }
+
+  .content {
+    line-height: 1.70;
+    color: #949ea8;
+    @include breakpoint('MEDIUM') {
+      text-align: center;
+    }
+  }
+
+}

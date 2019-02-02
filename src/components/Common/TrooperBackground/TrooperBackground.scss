@@ -1,0 +1,27 @@
+@import '@assets/styles/global.scss';
+
+.trooperIconContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+
+  @include breakpoint('MEDIUM') {
+    width: 100%;
+  }
+
+  div {
+    align-self: center;
+    width: 400px;
+    height: 388px;
+    background: url('../../../assets/images/trooperIconBackground.png');
+    background-size: cover;
+    margin-left: 254px;
+
+    @include breakpoint('MEDIUM') {
+      margin-left: initial;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 @import '@assets/styles/global.scss';
 
-.errorContainer {
+.contentContainer {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -25,10 +25,13 @@
       margin-right: initial;
       text-align: center;
     }
+    .errorMsg {
+      color: $error-color;
+    }
   }
 
   .title {
-    color: #323c46;
+    color: $darkTeal;
     font-size: 26px;
     @include breakpoint('MEDIUM') {
       text-align: center;
@@ -36,8 +39,8 @@
   }
 
   .content {
-    line-height: 1.70;
-    color: #949ea8;
+    color: $grayMedium;
+    margin-bottom: 10px;
     @include breakpoint('MEDIUM') {
       text-align: center;
     }

@@ -1,25 +1,26 @@
 import { observable, action } from 'mobx';
 import api from '../api';
+import commonStore from '@stores/commonStore';
 
 class UserStore {
 
   @observable currentUser;
-  @observable loadingUser;
-  @observable updatingUser;
-  @observable updatingUserErrors;
+  @observable loadingUser = false;
 
   @action pullUser() {
     this.loadingUser = true;
-    return api.Auth.current()
-      .then(action(({ user }) => { this.currentUser = user; }))
+    let refreshToken = commonStore.refreshToken
+    return api.Auth.refreshToken(refreshToken)
+      .then(action(user => {
+        const {id, email, firstName, lastName} = user
+        this.currentUser = {
+          id, email, firstName, lastName
+        }
+      }))
       .finally(action(() => { this.loadingUser = false; }))
   }
-
-  @action updateUser(newUser) {
-    this.updatingUser = true;
-    return api.Auth.save(newUser)
-      .then(action(({ user }) => { this.currentUser = user; }))
-      .finally(action(() => { this.updatingUser = false; }))
+  @action setCurrentUser(currentUser) {
+    this.currentUser = currentUser;
   }
 
   @action forgetUser() {

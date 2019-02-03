@@ -1,5 +1,5 @@
 import { observable, action, reaction } from 'mobx';
-import api from '../api';
+// import api from '../api';
 
 class CommonStore {
 
@@ -19,6 +19,17 @@ class CommonStore {
           window.localStorage.setItem('jwt', token);
         } else {
           window.localStorage.removeItem('jwt');
+        }
+      }
+    );
+
+    reaction(
+      () => this.refreshToken,
+      refreshToken => {
+        if (refreshToken) {
+          window.localStorage.setItem('jwt-refresh', refreshToken);
+        } else {
+          window.localStorage.removeItem('jwt-refresh');
         }
       }
     );

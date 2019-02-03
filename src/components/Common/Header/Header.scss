@@ -1,0 +1,134 @@
+@import '@assets/styles/global.scss';
+
+nav {
+  display: flex;
+  flex-direction: row;
+
+  >div {
+    display: flex;
+    flex: 1;
+    padding: 5px 24px;
+    height: 74px;
+  }
+
+  .nav_logo {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: $black;
+  }
+
+  .nav_back {
+    justify-content: center;
+    align-self: center;
+    font-size: 16px;
+    >span {
+      display: flex;
+      align-self: center;
+      cursor: pointer;
+    }
+  }
+
+  .nav-user_container {
+    justify-content: flex-end;
+    align-self: center;
+    color: $grayMedium;
+
+    a, a:visited, p {
+      color: $grayMedium;
+      width: 100%;
+    }
+
+    .menu_container {
+      display: flex;
+      align-self: center;
+      cursor: pointer;
+      >span {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin-left: 10px;
+      }
+    }
+    .nav-user_circle {
+      height: 50px;
+      width: 50px;
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+      border-radius: 50%;
+      background: $lightGray;
+    }
+    .nav-user_name {
+      font-size: 16px;
+    }
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+
+    .dropdown-content {
+      position: absolute;
+      background-color: $white;
+      min-width: 160px;
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      padding: 12px 16px;
+      z-index: 1;
+      border-radius: 15px;
+      margin-top: 10px;
+      right: -12px;
+      width: 193px;
+
+      &:after {
+        content:"";
+        position: absolute;
+        right: 25px;
+        top: -15px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 15px 15px 15px;
+        border-color: transparent transparent $white transparent;
+        z-index:9998;
+      }
+
+    }
+    &:hover .dropdown-content {
+      display: block;
+    }
+
+  }
+
+}
+
+
+
+.arrow_box {
+  position: relative;
+  background: #ffffff;
+  border: 4px solid #ffffff;
+}
+.arrow_box:after, .arrow_box:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+  border-width: 30px;
+  margin-left: -30px;
+}
+.arrow_box:before {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+  border-width: 36px;
+  margin-left: -36px;
+}
+

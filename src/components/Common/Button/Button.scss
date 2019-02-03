@@ -10,15 +10,25 @@
   font-family: "Hind", sans-serif;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #fff;
+  color: $white;
   cursor: pointer;
 
   @include breakpoint('MEDIUM') {
     margin: 20px auto;
   }
 
-  &.refresh {
-    background: #323c46;
+  &.darkTeal {
+    background: $darkTeal;
+    &:hover {
+      background: darken($darkTeal, 10%);
+    }
+  }
+
+  &.green {
+    background: $green;
+    &:hover {
+      background: $green-hover;
+    }
   }
 
   a {
@@ -27,4 +37,9 @@
     line-height: 60px;
     color: #fff;
   }
+}
+
+.btnFixLoading .LoadingContainer {
+  margin-left: 10px;
+  zoom: 0.7;
 }

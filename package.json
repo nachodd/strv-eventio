@@ -43,11 +43,13 @@
     "postcss-preset-env": "6.3.1",
     "postcss-safe-parser": "4.0.1",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.7.0",
     "react-app-polyfill": "^0.2.0",
     "react-dev-utils": "^7.0.1",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1",
+    "react-spinners": "^0.5.1",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
@@ -118,13 +120,21 @@
   },
   "babel": {
     "plugins": [
-      ["@babel/plugin-proposal-decorators", { "legacy": true }]
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      "emotion"
     ],
     "presets": [
       "react-app"
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.3.0"
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "babel-plugin-emotion": "^10.0.6",
+    "mobx-react-devtools": "^6.0.3"
   }
 }

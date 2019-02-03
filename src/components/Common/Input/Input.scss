@@ -1,0 +1,88 @@
+@import '@assets/styles/global.scss';
+
+@mixin label-inactive() {
+  font-size: 18px;
+  transform: translateY(0);
+}
+
+@mixin label-active() {
+  font-size: 14px;
+  transform: translateY(-18px);
+}
+
+.form-field {
+  display: block;
+  margin-bottom: 16px;
+}
+.form-field__label {
+  @include label-active();
+  text-align: left;
+  font-family: "Hind", sans-serif;
+  display: block;
+  font-weight: normal;
+  /*left: 0;*/
+  /*margin: 0;*/
+  padding-top: 18px;
+  position: absolute;
+  top: 0;
+  transition: all $animation-duration;
+  width: 100%;
+  color: $primary-color;
+}
+.form-field__control {
+  background: transparent;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.form-field__error {
+  color: $error-color;
+  margin-top: 10px;
+}
+
+.form-field__input,
+.form-field__textarea {
+  font-family: "Hind", sans-serif;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid $primary-color;
+  color: $darkTeal;
+  font-size: 18px;
+  margin-top: 24px;
+  outline: 0;
+  padding-bottom: 7px;
+  width: 100%;
+  &.error {
+    border-bottom-color: $error-color;
+  }
+
+  // IE 10-11
+  &:-ms-input-placeholder {
+    ~ .form-field__label {
+      @include label-inactive();
+    }
+  }
+  // All other browsers except Edge
+  &:placeholder-shown {
+    ~ .form-field__label {
+      @include label-inactive();
+    }
+  }
+  &:focus {
+    ~ .form-field__label {
+      color: $primary-color;
+      @include label-active();
+    }
+    ~ .form-field__bar {
+      border-bottom: 2px solid $primary-color;
+      &.error {
+        border-bottom-color: $error-color;
+      }
+      transform: scaleX(150);
+    }
+  }
+}
+.form-field__textarea {
+  height: 150px;
+}

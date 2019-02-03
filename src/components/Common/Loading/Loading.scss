@@ -1,0 +1,11 @@
+
+
+.LoadingContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  
+  >div {
+    align-self: center;
+  }
+}

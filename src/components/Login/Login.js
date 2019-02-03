@@ -1,8 +1,18 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import Logo from '../Common/Logo/Logo'
+import SidePanel from '../Common/SidePanel/SidePanel'
+import HeadSingUpIn from '../Common/HeadSingUpIn/HeadSingUpIn'
+import ContentContainer from '../Common/ContentContainer/ContentContainer'
+import Button from '../Common/Button/Button'
+import Input from "../Common/Input/Input"
+// import DevTools from 'mobx-react-devtools';
+// import { parse as qsParse } from 'query-string'
+import Loading from "../Common/Loading/Loading"
+import './Login.scss'
 
-@inject('authStore')
+@inject('authStore', 'userStore')
 @withRouter
 @observer
 class Login extends React.Component {
@@ -11,69 +21,69 @@ class Login extends React.Component {
     this.props.authStore.reset();
   }
 
+  componentDidMount() {
+    this.props.authStore.setEmail("steverogers@strv.com");
+    this.props.authStore.setPassword("am3riCa");
+  }
+
   handleEmailChange = e => this.props.authStore.setEmail(e.target.value);
   handlePasswordChange = e => this.props.authStore.setPassword(e.target.value);
   handleSubmitForm = (e) => {
     e.preventDefault();
     this.props.authStore.login()
-      .then(() => this.props.history.replace('/'));
+      .then(() => {
+        this.props.history.replace('/events')
+      });
   };
 
   render() {
-    const { values, errors, inProgress } = this.props.authStore;
+    const { currentUser, loadingUser } = this.props.userStore
+    if (loadingUser) {
+      return (
+        <div className="loadingUserCont">
+          <Loading color="gray"/>
+        </div>
+      )
+    }
+    if (currentUser) {
+      // const qs = this.props.location.search;
+      // const eventsLocation = qs ? `/events${qs}` : "/events"
+      return <Redirect to="/events"/>
+    }
+
+    const { values, inProgress, error, errorMsg, errorBag } = this.props.authStore
 
     return (
-      <div className="auth-page">
-        <div className="container page">
-          <div className="row">
+      <div>
+        <Logo/>
+        <SidePanel/>
+        <HeadSingUpIn type='singUp'/>
 
-            <div className="col-md-6 offset-md-3 col-xs-12">
-              <h1 className="text-xs-center">Sign In</h1>
-              <p className="text-xs-center">
-                <Link to="register">
-                  Need an account?
-                </Link>
-              </p>
-
-              <form onSubmit={this.handleSubmitForm}>
-                <fieldset>
-
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="email"
-                      placeholder="Email"
-                      value={values.email}
-                      onChange={this.handleEmailChange}
-                    />
-                  </fieldset>
-
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="password"
-                      placeholder="Password"
-                      value={values.password}
-                      onChange={this.handlePasswordChange}
-                    />
-                  </fieldset>
-
-                  <button
-                    className="btn btn-lg btn-primary pull-xs-right"
-                    type="submit"
-                    disabled={inProgress}
-                  >
-                    Sign in
-                  </button>
-
-                </fieldset>
-              </form>
-            </div>
-
+        <ContentContainer>
+          <div className="title">Sing In to Eventio.</div>
+          <div className="content">
+            {errorMsg ? <div className="errorMsg">{errorMsg}</div> : "Enter your details below."}
           </div>
-        </div>
+          <form className="loginRegisterForm" onSubmit={this.handleSubmitForm}>
+            <Input label="Email"
+                   type="text"
+                   change={this.handleEmailChange}
+                   value={values.email}
+                   error={error}
+                   errorMsg={errorBag.email}/>
+            <Input label="Password"
+                   type="password"
+                   change={this.handlePasswordChange}
+                   value={values.password}
+                   error={error}
+                   errorMsg={errorBag.password}/>
+            <Button color="green" type="submit" loadingState={inProgress}>
+              SING IN
+            </Button>
+          </form>
+        </ContentContainer>
       </div>
-    );
+    )
   }
 }
 

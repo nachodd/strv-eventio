@@ -2,7 +2,7 @@
 
 .eventList {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: $almostWhite;
 }
 
@@ -20,18 +20,42 @@
   margin-left: auto;
   margin-top: 70px;
 }
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   .eventsContainer {
     width: 750px;
   }
-}
+}*/
 @media (min-width: 992px) {
   .eventsContainer {
-    width: 970px;
+    width: 992px;
   }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   .eventsContainer {
-    width: 1170px;
+    width: 1300px;
+  }
+}
+
+.cardsContainer {
+  display: grid;
+  grid-gap: 15px;
+  grid-template-rows: 1fr 1fr 1fr;
+  &.gridStyle {
+    grid-template-columns: 1fr 1fr 1fr;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 780px) {
+      grid-template-columns: 1fr;
+    }
+    @include breakpoint('MEDIUM') {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  &.tableStyle {
+    grid-template-columns: 1fr;
   }
 }

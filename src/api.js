@@ -87,7 +87,9 @@ const Events = {
       .get(`${API_ROOT}/events`)
       .use(prepareApiKey)
       .end(handleErrors)
-      .then(responseBody)
+      .then(responseBody),
+  assist: (eventId) =>
+    requests.post(`/events/${eventId}/attendees/me`),
 };
 
 // const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;

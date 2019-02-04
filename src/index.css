@@ -12,6 +12,13 @@ body {
     min-width: 375px;
 }
 
+body.white {
+    background: #fff;
+}
+body.gray {
+    background: #F9F9FB;
+}
+
 
 a {
     text-decoration: none;

@@ -1,0 +1,134 @@
+@import '@assets/styles/global.scss';
+
+.card {
+  flex-direction: column;
+
+  .date {
+    font-size: 14px;
+    color: $dateGray;
+    .tableStyle & {
+      width: 15%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+  .title {
+    font-size: 20px;
+    color: $darkTeal;
+    .tableStyle & {
+      width: 20%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+  .owner {
+    font-size: 16px;
+    color: $authorCement;
+    margin-bottom: 15px;
+    .tableStyle & {
+      width: 10%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+  }
+  .description {
+    font-size: 16px;
+    color: $grayMedium;
+
+    .tableStyle & {
+      width: 25%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  .cardContent {
+
+    .tableStyle & {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .cardFooter {
+    flex: 1;
+    display: flex;
+
+    .cardFooterCont {
+      display: flex;
+      flex: 1;
+      align-self: flex-end;
+    }
+
+    .attendeeCont,
+    .buttonCont {
+      display: flex;
+      flex: 1;
+      align-self: center;
+    }
+
+    .attendeeCont {
+
+      .tableStyle & {
+        width: 10%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+    }
+    .buttonCont {
+      justify-content: flex-end;
+      .tableStyle & {
+        width: 20%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+    }
+  }
+
+
+
+}
+
+/*.cardGrid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-direction: row;
+  max-height: 100vh;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    flex-basis: 100%;
+  }
+}*/
+
+/*.cardList {
+  display: flex;
+
+  .col {
+    flex: 1;
+  }
+}
+.row {
+  display: flex;
+}*/
+

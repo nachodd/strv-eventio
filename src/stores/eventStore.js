@@ -7,7 +7,7 @@ class EventsStore {
   @observable events = [];
   @observable eventsToDisplay = "all"
   @observable eventsViewMode = "grid"
-  
+
   @computed get eventFilterClasses() {
     const classes = { all: "", future: "", past: ""}
     switch (this.eventsToDisplay) {
@@ -48,12 +48,21 @@ class EventsStore {
       .then(action((events) => { this.events = events }))
       .finally(action(() => { this.isLoadingEvents = false; }))
   }
+  @action assistEvent(eventId) {
+    debugger
+    return api.Events.assist(eventId)
+      .then(action((event) => {
+        debugger
+        const ev = this.events.find(e => e.id === eventId)
+        ev.attendees = event
+      }))
+      .finally(action(() => { this.isLoadingEvents = false; }))
+  }
 
   @action setEvents(events) {
     this.events = events;
   }
   @action setEventsToDisplay(eventsToDisplay="all") {
-    debugger
     this.eventsToDisplay = eventsToDisplay
   }
   @action setEventsViewMode(eventsViewMode) {

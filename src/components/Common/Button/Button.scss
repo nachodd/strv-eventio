@@ -13,6 +13,11 @@
   color: $white;
   cursor: pointer;
 
+  &.small {
+    width: 100px;
+    height: 43px;
+  }
+
   @include breakpoint('MEDIUM') {
     margin: 20px auto;
   }
@@ -24,10 +29,25 @@
     }
   }
 
+  &.gray {
+    background: $lightGray;
+    color: $anotherGray;
+    &:hover {
+      background: $grayButtonHover;
+    }
+  }
+
   &.green {
     background: $green;
     &:hover {
-      background: $green-hover;
+      background: $greenHover;
+    }
+  }
+
+  &.red {
+    background: $redButton;
+    &:hover {
+      background: $redButtonHover;
     }
   }
 

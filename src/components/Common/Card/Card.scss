@@ -1,0 +1,15 @@
+@import '@assets/styles/global.scss';
+
+.eventCard {
+  background: $white;
+  border-radius: 5px;
+  display: flex;
+  padding: 30px;
+  position: relative;
+  /*box-shadow: 0 3px 3px rgba(0,0,0,0.10), 0 3px 3px rgba(0,0,0,0.15);*/
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.15);
+
+  .tableStyle & {
+    padding: 0 30px;
+  }
+}

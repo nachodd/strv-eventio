@@ -17,6 +17,11 @@ import './Login.scss'
 @observer
 class Login extends React.Component {
 
+  componentWillMount() {
+    document.body.classList.remove('gray');
+    document.body.classList.add('white');
+  }
+
   componentWillUnmount() {
     this.props.authStore.reset();
   }

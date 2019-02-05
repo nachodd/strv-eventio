@@ -17,19 +17,19 @@ const handleErrors = err => {
   return err;
 };
 
-const responseBody = res => res.body;
-
+const responseBody = res => res.body
 const parseTokens = res => {
-  commonStore.setToken(res.headers['authorization'])
+  if (res.headers['authorization']) {
+    commonStore.setToken(res.headers['authorization'])
+  }
   if (res.headers['refresh-token']) {
     commonStore.setRefreshToken(res.headers['refresh-token'])
   }
-  return responseBody(res)
+  return res
 }
-
 const prepareHeaders = req => {
   if (commonStore.token) {
-    req.set('authorization', `Token ${commonStore.token}`);
+    req.set('Authorization', commonStore.token);
   }
 };
 const prepareApiKey =  req => {
@@ -37,12 +37,14 @@ const prepareApiKey =  req => {
 };
 
 const requests = {
-  // del: url =>
-  //   superagent
-  //     .del(`${API_ROOT}${url}`)
-  //     .use(prepareHeaders)
-  //     .end(handleErrors)
-  //     .then(responseBody),
+  del: url =>
+    superagent
+      .del(`${API_ROOT}${url}`)
+      .use(prepareHeaders)
+      .use(prepareApiKey)
+      .end(handleErrors)
+      .then(responseBody),
+
   get: url =>
     superagent
       .get(`${API_ROOT}${url}`)
@@ -50,33 +52,40 @@ const requests = {
       .use(prepareApiKey)
       .end(handleErrors)
       .then(responseBody),
-  // put: (url, body) =>
-  //   superagent
-  //     .put(`${API_ROOT}${url}`, body)
-  //     .use(prepareHeaders)
-  //     .end(handleErrors)
-  //     .then(responseBody),
-  post: (url, body, isLogin=false) =>
+
+  patch: url =>
+    superagent
+      .patch(`${API_ROOT}${url}`)
+      .use(prepareHeaders)
+      .use(prepareApiKey)
+      .end(handleErrors)
+      .then(responseBody),
+
+  post: (url, body) =>
     superagent
       .post(`${API_ROOT}${url}`, body)
       .use(prepareHeaders)
       .use(prepareApiKey)
       .end(handleErrors)
-      .then(res => isLogin ? parseTokens(res) : responseBody(res))
+      .then(responseBody),
+
+  loginOrRefresh: (body) =>
+    superagent
+      .post(`${API_ROOT}/auth/native`, body)
+      .use(prepareApiKey)
+      .end(handleErrors)
+      .then(parseTokens)
+      .then(responseBody),
 };
 
 const Auth = {
   login: (email, password) =>
-    requests.post('/auth/native', { email, password }, true),
+    requests.loginOrRefresh({ email, password }),
   register: (firstName, lastName, email, password) =>
     requests.post('/users', { firstName, lastName, email, password }),
-  refreshToken: (refreshToken) => {
-    return superagent
-      .post(`${API_ROOT}/auth/native`, { refreshToken })
-      .use(req => req.set('APIKey', API_KEY))
-      .end(handleErrors)
-      .then(responseBody)
-  }
+  refreshToken: (refreshToken) =>
+    requests.loginOrRefresh({ refreshToken })
+
   // save: user =>
   //   requests.put('/user', { user })
 };
@@ -88,8 +97,10 @@ const Events = {
       .use(prepareApiKey)
       .end(handleErrors)
       .then(responseBody),
-  assist: (eventId) =>
+  join: (eventId) =>
     requests.post(`/events/${eventId}/attendees/me`),
+  leave: (eventId) =>
+    requests.del(`/events/${eventId}/attendees/me`),
 };
 
 // const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;

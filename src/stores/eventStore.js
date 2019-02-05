@@ -45,18 +45,29 @@ class EventsStore {
   @action loadEvents() {
     this.isLoadingEvents = true;
     return api.Events.getAll()
-      .then(action((events) => { this.events = events }))
-      .finally(action(() => { this.isLoadingEvents = false; }))
-  }
-  @action assistEvent(eventId) {
-    debugger
-    return api.Events.assist(eventId)
-      .then(action((event) => {
-        debugger
-        const ev = this.events.find(e => e.id === eventId)
-        ev.attendees = event
+      .then(action((events) => {
+        this.events = events.map(e => {
+          // add isProcessing flag for loading purposees
+          e.isProcessing = false
+          return e
+        })
       }))
       .finally(action(() => { this.isLoadingEvents = false; }))
+  }
+
+  @action updateEventAttendees(action, eventId) {
+    const eventToUpdate = this.events.find(e => e.id === eventId)
+    eventToUpdate.isProcessing = true
+    return api.Events[action](eventId)
+      .then(this.updateAttendees)
+      .finally(() => { eventToUpdate.isProcessing = false })
+  }
+
+
+  @action.bound
+  updateAttendees(updateEvent) {
+    const oldEvent = this.events.find(e => e.id === updateEvent.id)
+    oldEvent.attendees = updateEvent.attendees
   }
 
   @action setEvents(events) {

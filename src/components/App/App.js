@@ -1,53 +1,54 @@
 import React, { Component } from 'react';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'mobx-react';
+import { Switch, Route, withRouter, BrowserRouter as Router } from 'react-router-dom';
 import Login from '../Login/Login'
+import Register from "../Register/Register"
 import EventList from '../EventList/EventList'
 import NotFound from '../NotFound/NotFound'
 import PrivateRoute from '../PrivateRoute/PrivateRoute'
-// import Loading from '../Common/Loading/Loading'
-
-import authStore from '@stores/authStore';
-import commonStore from '@stores/commonStore';
-import userStore from '@stores/userStore';
-import eventStore from '@stores/eventStore';
-
-const stores = {
-  authStore,
-  commonStore,
-  userStore,
-  eventStore
-};
+import Loading from "../Common/Loading/Loading"
+import {inject, observer} from 'mobx-react'
 
 
+@inject('userStore', 'commonStore')
+@observer
 class App extends Component {
 
   componentWillMount() {
-    if (!commonStore.refreshToken) {
-      commonStore.setAppLoaded();
+    if (!this.props.commonStore.refreshToken) {
+      this.props.commonStore.setAppLoaded();
     }
   }
 
   componentDidMount() {
-    if (commonStore.refreshToken) {
-      userStore.pullUser()
-        .finally(() => commonStore.setAppLoaded());
+    if (this.props.commonStore.refreshToken) {
+      this.props.userStore.pullUser()
+        .finally(() => {
+          this.props.commonStore.setAppLoaded()
+          console.log(this.props.currentUser)
+        });
     }
   }
 
   render() {
-    return (
-      <Provider {...stores}>
+    if (this.props.commonStore.appLoaded) {
+      return (
         <Router basename="/">
           <Switch>
-            <Route path="/login" component={ Login } />
-            <Route path="/register" component={ Login } />
-            <PrivateRoute path="/events" component={ EventList } />
-            <Route component={ NotFound } />
+            <Route path="/login" component={Login}/>
+            <Route path="/register" component={Register}/>
+            <PrivateRoute path="/events" component={EventList}/>
+            <Route component={NotFound}/>
           </Switch>
         </Router>
-      </Provider>
-    );
+      )
+    }
+    else {
+      return (
+        <div className="loadingUserCont">
+          <Loading color="gray"/>
+        </div>
+      )
+    }
   }
 }
 

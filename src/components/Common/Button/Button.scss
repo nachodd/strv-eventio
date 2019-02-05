@@ -62,4 +62,8 @@
 .btnFixLoading .LoadingContainer {
   margin-left: 10px;
   zoom: 0.7;
+
+  .small & {
+    zoom: 0.5;
+  }
 }

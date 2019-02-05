@@ -10,7 +10,9 @@ import {inject} from "mobx-react"
 }));*/
 const EventItemList = inject("eventStore")(({eventItem, viewMode, buttonType, eventStore}) => {
 
-  const eventDate = moment(new Date(eventItem.startsAt)).format('MMMM DD, YYYY - h:mm A')
+  const eventDate =
+    moment(new Date(eventItem.startsAt))
+    .format('MMMM DD, YYYY - h:mm A')
 
   let button
   switch (buttonType) {
@@ -18,10 +20,22 @@ const EventItemList = inject("eventStore")(({eventItem, viewMode, buttonType, ev
       button = <Button size="small">EDIT</Button>
       break
     case "attending":
-      button = <Button size="small" color="red">LEAVE</Button>
+      button = (
+        <Button size="small" color="red"
+                onClick={() => eventStore.updateEventAttendees('leave', eventItem.id)}
+                loadingState={eventItem.isProcessing}>
+          LEAVE
+        </Button>
+      )
       break
     case "notAttending":
-      button = <Button size="small" color="green" onClick={() => eventStore.assistEvent(eventItem.id)}>JOIN</Button>
+      button = (
+        <Button size="small" color="green"
+                onClick={() => eventStore.updateEventAttendees('join', eventItem.id)}
+                loadingState={eventItem.isProcessing}>
+          JOIN
+        </Button>
+      )
       break
   }
 

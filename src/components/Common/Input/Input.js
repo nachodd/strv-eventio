@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import './Input.scss'
 
 
-const Input = ({label, value, type, error, errorMsg, change}) => {
+const Input = ({label, name, value, type, error, errorMsg, change}) => {
   const id = "input_"+(Math.floor(Math.random()*1000))
   const inputClasses = error ? 'form-field__input error' : 'form-field__input'
 
@@ -15,6 +15,7 @@ const Input = ({label, value, type, error, errorMsg, change}) => {
           type={type}
           className={inputClasses}
           placeholder=" "
+          name={name}
           value={value}
           onChange={change}/>
         <label htmlFor={id} className="form-field__label">{label}</label>
@@ -29,6 +30,7 @@ const Input = ({label, value, type, error, errorMsg, change}) => {
 }
 Input.propTypes = {
   label: PropTypes.string.isRequired,
+  name: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string,
   error: PropTypes.bool,

@@ -21,6 +21,10 @@ class AuthStore {
     return this.errorMsg !== ''
   }
 
+  @action setField(field, value) {
+    this.values[field] = value
+  }
+
   @action setFirstName(firstName) { this.values.firstName = firstName }
   @action setLastName(lastName) { this.values.lastName = lastName }
   @action setEmail(email) { this.values.email = email }

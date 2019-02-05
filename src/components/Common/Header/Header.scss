@@ -79,6 +79,13 @@ nav {
       right: -12px;
       width: 193px;
 
+      >p, >a {
+        cursor: pointer;
+        &:hover {
+          font-weight: bolder;
+        }
+      }
+
       &:after {
         content:"";
         position: absolute;

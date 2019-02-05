@@ -10,12 +10,16 @@ class AuthStore {
     lastName: '',
     email: '',
     password: '',
+    repeatPassword: '',
     passwordType: 'password',
   }
   @observable errorMsg = ''
   @observable errorBag = {
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
+    repeatPassword: '',
   }
   @computed get error() {
     return this.errorMsg !== ''
@@ -25,18 +29,21 @@ class AuthStore {
     this.values[field] = value
   }
 
-  @action setFirstName(firstName) { this.values.firstName = firstName }
-  @action setLastName(lastName) { this.values.lastName = lastName }
-  @action setEmail(email) { this.values.email = email }
-  @action setPassword(password) { this.values.password = password }
-  @action setPasswordType(passwordType) { this.values.passwordType = passwordType }
+  // @action setFirstName(firstName) { this.values.firstName = firstName }
+  // @action setLastName(lastName) { this.values.lastName = lastName }
+  // @action setEmail(email) { this.values.email = email }
+  // @action setPassword(password) { this.values.password = password }
+  // @action setPasswordType(passwordType) { this.values.passwordType = passwordType }
+
   @action setErrorMsg(errorMsg) { this.values.errorMsg = errorMsg }
   @action reset() {
     this.values.firstName = ''
     this.values.lastName = ''
     this.values.email = ''
     this.values.password = ''
+    this.values.repeatPassword = ''
     this.values.passwordType = 'password'
+    this.errorMsg = ''
   }
   @action login() {
     this.inProgress = true
@@ -82,11 +89,19 @@ class AuthStore {
   }
 
   @action register() {
+    debugger
+    if (this.values.password !== this.values.repeatPassword) {
+      this.errorMsg = "Passwords don't match"
+      this.errorBag.password = "Passwords don't match"
+      this.errorBag.repeatPassword = "Passwords don't match"
+      return Promise.reject("Passwords don't match");
+    }
     this.inProgress = true
     return api.Auth.register(this.values.firstName, this.values.lastName, this.values.email, this.values.password)
-      .then(({ user }) => commonStore.setToken(user.token))
+      // must login in order to get the token
+      .then(this.login)
       .catch(action((err) => {
-        // parseErrors?
+        this.parseErrorMsg(err.response.body)
         throw err
       }))
       .finally(action(() => { this.inProgress = false }))

@@ -1,14 +1,9 @@
 import React from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import Logo from '~/Common/Logo/Logo'
-import SidePanel from '~/Common/SidePanel/SidePanel'
-import HeadSingUpIn from '~/Common/HeadSingUpIn/HeadSingUpIn'
-import ContentContainer from '~/Common/ContentContainer/ContentContainer'
 // import Button from '~/Common/Button/Button'
 // import Input from "~/Common/Input/Input"
-import Loading from "~/Common/Loading/Loading"
-import '../../Login/Login.scss'
+// import '../../Login/Login.scss'
 
 export default function LoginRegisterHOC (LoginRegisterForm) {
 
@@ -28,8 +23,11 @@ export default function LoginRegisterHOC (LoginRegisterForm) {
     }
 
     componentDidMount() {
-      // this.props.authStore.setEmail("steverogers@strv.com");
-      // this.props.authStore.setPassword("am3riCa");
+      this.props.authStore.setField("firstName", "Nacho");
+      this.props.authStore.setField("lastName", "Durand");
+      this.props.authStore.setField("email", "nachodurand@gmail.com");
+      this.props.authStore.setField("password", "32658999");
+      this.props.authStore.setField("repeatPassword", "3265899");
     }
 
     handleInputChange = e => {
@@ -40,39 +38,16 @@ export default function LoginRegisterHOC (LoginRegisterForm) {
       this.props.authStore[action]()
         .then(() => {
           this.props.history.replace('/events')
-        });
+        })
+        .catch(e => console.log(e));
     };
 
     render() {
-      const { currentUser, loadingUser } = this.props.userStore
-      if (loadingUser) {
-        return (
-          <div className="loadingUserCont">
-            <Loading color="gray"/>
-          </div>
-        )
-      }
-      if (currentUser) {
-        return <Redirect to="/events"/>
-      }
-
       return (
-        <div>
-          <Logo/>
-          <SidePanel/>
-          <HeadSingUpIn type='singUp'/>
-
-          <ContentContainer>
-
-            <LoginRegisterForm
-              authStore={this.props.authStore}
-              userStore={this.props.userStore}
-              handleInputChange={this.handleInputChange}
-              handleSubmitForm={this.handleSubmitForm}
-            />
-
-          </ContentContainer>
-        </div>
+        <LoginRegisterForm
+          {...this.props}
+          handleInputChange={this.handleInputChange}
+          handleSubmitForm={this.handleSubmitForm} />
       )
     }
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter, BrowserRouter as Router } from 'react-router-dom';
-import Login from '../Login/Login'
+//import Login from '../Login/Login'
+import LoginRegisterWrapper from '../Common/LoginRegisterHoc/LoginRegisterWrapper'
 import Register from "../Register/Register"
 import EventList from '../EventList/EventList'
 import NotFound from '../NotFound/NotFound'
@@ -34,8 +35,8 @@ class App extends Component {
       return (
         <Router basename="/">
           <Switch>
-            <Route path="/login" component={Login}/>
-            <Route path="/register" component={Register}/>
+            <Route path="/login" component={LoginRegisterWrapper}/>
+            <Route path="/register" component={LoginRegisterWrapper}/>
             <PrivateRoute path="/events" component={EventList}/>
             <Route component={NotFound}/>
           </Switch>

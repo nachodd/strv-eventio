@@ -76,18 +76,24 @@ const requests = {
       .end(handleErrors)
       .then(parseTokens)
       .then(responseBody),
+
+  register: (body) =>
+    superagent
+      .post(`${API_ROOT}/users`, body)
+      .use(prepareApiKey)
+      .end(handleErrors)
+      .then(parseTokens)
+      .then(responseBody),
+
 };
 
 const Auth = {
   login: (email, password) =>
     requests.loginOrRefresh({ email, password }),
   register: (firstName, lastName, email, password) =>
-    requests.post('/users', { firstName, lastName, email, password }),
+    requests.register({ firstName, lastName, email, password }),
   refreshToken: (refreshToken) =>
-    requests.loginOrRefresh({ refreshToken })
-
-  // save: user =>
-  //   requests.put('/user', { user })
+    requests.loginOrRefresh({ refreshToken }),
 };
 
 const Events = {

@@ -4,7 +4,7 @@ import './Input.scss'
 
 
 const Input = ({label, name, value, type, error, errorMsg, change}) => {
-  const id = "input_"+(Math.floor(Math.random()*1000))
+  const id = "input_"+(Math.floor(Math.random()*10000))
   const inputClasses = error ? 'form-field__input error' : 'form-field__input'
 
   return (

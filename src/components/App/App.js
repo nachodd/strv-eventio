@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter, BrowserRouter as Router } from 'react-router-dom';
-//import Login from '../Login/Login'
 import LoginRegisterWrapper from '../Common/LoginRegisterHoc/LoginRegisterWrapper'
-import Register from "../Register/Register"
 import EventList from '../EventList/EventList'
+import EventCreate from '../EventCreate/EventCreate'
 import NotFound from '../NotFound/NotFound'
 import PrivateRoute from '../PrivateRoute/PrivateRoute'
 import Loading from "../Common/Loading/Loading"
@@ -11,6 +10,7 @@ import {inject, observer} from 'mobx-react'
 
 
 @inject('userStore', 'commonStore')
+@withRouter
 @observer
 class App extends Component {
 
@@ -20,27 +20,30 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    if (this.props.commonStore.refreshToken) {
-      this.props.userStore.pullUser()
-        .finally(() => {
-          this.props.commonStore.setAppLoaded()
-          console.log(this.props.currentUser)
-        });
+  async componentDidMount() {
+    try {
+      if (this.props.commonStore.refreshToken) {
+        await this.props.userStore.pullUser()
+      } else {
+        this.props.history.replace('/login')
+      }
+    } catch (e) {
+      this.props.history.replace('/login')
+    } finally {
+      this.props.commonStore.setAppLoaded()
     }
   }
 
   render() {
     if (this.props.commonStore.appLoaded) {
       return (
-        <Router basename="/">
-          <Switch>
-            <Route path="/login" component={LoginRegisterWrapper}/>
-            <Route path="/register" component={LoginRegisterWrapper}/>
-            <PrivateRoute path="/events" component={EventList}/>
-            <Route component={NotFound}/>
-          </Switch>
-        </Router>
+        <Switch>
+          <Route path="/login" component={LoginRegisterWrapper}/>
+          <Route path="/register" component={LoginRegisterWrapper}/>
+          <PrivateRoute path="/events" component={EventList}/>
+          <PrivateRoute path="/create-event" component={EventCreate}/>
+          <Route component={NotFound}/>
+        </Switch>
       )
     }
     else {

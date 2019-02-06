@@ -14,6 +14,8 @@ const EventItemList = inject("eventStore")(({eventItem, viewMode, buttonType, ev
     moment(new Date(eventItem.startsAt))
     .format('MMMM DD, YYYY - h:mm A')
 
+  const isFull = eventItem.capacity === eventItem.attendees.length
+
   let button
   switch (buttonType) {
     case "owner":
@@ -32,6 +34,7 @@ const EventItemList = inject("eventStore")(({eventItem, viewMode, buttonType, ev
       button = (
         <Button size="small" color="green"
                 onClick={() => eventStore.updateEventAttendees('join', eventItem.id)}
+                disabled={isFull}
                 loadingState={eventItem.isProcessing}>
           JOIN
         </Button>

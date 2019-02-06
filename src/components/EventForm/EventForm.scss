@@ -1,0 +1,9 @@
+@import '@assets/styles/global.scss';
+
+.EventForm {
+  width: 450px;
+
+  @include breakpoint('MEDIUM') {
+    width: 250px;
+  }
+}

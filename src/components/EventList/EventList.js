@@ -6,6 +6,7 @@ import './EventList.scss'
 import Loading from "../Common/Loading/Loading"
 import EventsHeader from '../EventsHeader/EventsHeader'
 import EventItemList from '../EventItemList/EventItemList'
+import FloatingButton from "../Common/FloatingButton/FloatingButton"
 
 
 
@@ -20,11 +21,16 @@ class EventList extends React.Component {
   }
 
   componentDidMount() {
+    this.props.eventStore.setEventFloatingButtonType('add')
     this.props.eventStore.loadEvents()
   }
 
+  floatingButtonAction = () => {
+    this.props.history.push('create-event')
+  }
+
   render() {
-    const {isLoadingEvents, eventsFiltered, eventsViewMode} = this.props.eventStore
+    const {isLoadingEvents, eventsFiltered, eventsViewMode, eventFloatingButtonType} = this.props.eventStore
     const {currentUser}= this.props.userStore
 
     let rowClasses = ['cardsContainer']
@@ -33,7 +39,6 @@ class EventList extends React.Component {
     } else {
       rowClasses.push('tableStyle')
     }
-
 
     // debugger
     return (
@@ -71,6 +76,7 @@ class EventList extends React.Component {
                     })
                   }
                 </div>
+                <FloatingButton type={eventFloatingButtonType} onClick={this.floatingButtonAction} />
 
               </div>
             )

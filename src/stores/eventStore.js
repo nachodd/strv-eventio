@@ -7,6 +7,24 @@ class EventsStore {
   @observable events = [];
   @observable eventsToDisplay = "all"
   @observable eventsViewMode = "grid"
+  @observable eventFloatingButtonType = 'add'
+  @observable inProgress = false;
+  @observable newEvent = {
+    title: '',
+    description: '',
+    date: '',
+    time: '',
+    capacity: '',
+  }
+  @observable errorBag = {
+    title: undefined,
+    description: undefined,
+    date: undefined,
+    time: undefined,
+    capacity: undefined,
+  }
+  @observable errorMsg = ''
+
 
   @computed get eventFilterClasses() {
     const classes = { all: "", future: "", past: ""}
@@ -79,9 +97,90 @@ class EventsStore {
   @action setEventsViewMode(eventsViewMode) {
     this.eventsViewMode = eventsViewMode
   }
+  @action setEventFloatingButtonType(eventFloatingButtonType) {
+    this.eventFloatingButtonType = eventFloatingButtonType
+  }
   // @action setIsInsideEvent(isInsideEvent) {
   //   this.isInsideEvent = isInsideEvent;
   // }
+
+  @action setField(field, value) {
+    this.newEvent[field] = value
+  }
+  @action resetForm() {
+    this.newEvent.title = ''
+    this.newEvent.description = ''
+    this.newEvent.date = ''
+    this.newEvent.time = ''
+    this.newEvent.capacity = ''
+    this.clearErrors()
+
+  }
+  @action
+  clearErrors() {
+    this.errorMsg = undefined
+    this.errorBag.title = undefined
+    this.errorBag.description = undefined
+    this.errorBag.date = undefined
+    this.errorBag.time = undefined
+    this.errorBag.capacity = undefined
+  }
+
+  @action createEvent() {
+    this.clearErrors()
+    // TODO: validate input
+    const startsAt = new Date(`${this.newEvent.date} ${this.newEvent.time}`).toISOString();
+    this.inProgress = true
+    return api.Events.create(this.newEvent.title, this.newEvent.description, startsAt, this.newEvent.capacity)
+      .catch(action((err) => {
+        this.parseErrorMsg(err.response.body)
+        throw err
+      }))
+      .finally(action(() => { this.inProgress = false }))
+  }
+
+  @action
+  parseErrorMsg(reqBody) {
+    if (reqBody.error) {
+      switch (reqBody.error) {
+        case "Validation":
+          this.errorMsg = "There was some errors while processing your request"
+          if (reqBody.errors) {
+            if (Array.isArray(reqBody.errors)) {
+              reqBody.errors.forEach((err) => {
+                if (err.context.key && (err.context.key in this.errorBag)) {
+                  this.errorBag[err.context.key] = err.message
+                }
+              })
+            } else {
+              // in register, the error comes as object like:
+              // errors: { email: {..}, password: {...} }
+              if (Object.keys(reqBody.errors).length) {
+                const errorFields = Object.keys(reqBody.errors)
+                errorFields.forEach((field) => {
+                  if (field==='startsAt') {
+                    this.errorBag.date = ""
+                    this.errorBag.time = ""
+                    this.errorMsg = "The date & time of the event must be in the future."
+                  }
+                  else if (field in this.errorBag) {
+                    // if the kind of the error is min, put a custom message (as the original is ugly)
+                    this.errorBag[field] =
+                      reqBody.errors[field].kind === 'min'
+                        ? `The capacity must be greater than 0`
+                        : reqBody.errors[field].message
+                  }
+                })
+              }
+            }
+          }
+          break;
+        default:
+          this.errorMsg = "There was some errors while processing your request";
+          break;
+      }
+    }
+  }
 
 }
 

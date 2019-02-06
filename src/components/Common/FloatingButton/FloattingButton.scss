@@ -1,0 +1,34 @@
+@import '@assets/styles/global.scss';
+
+.floatingButtonWrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  svg.fbAdd {
+    cursor: pointer;
+
+    path.fbAddPath {
+      fill: $darkTeal;
+    }
+    &:hover {
+      path.fbAddPath {
+        fill: $addButtonHover;
+      }
+    }
+  }
+
+  svg.fbSave {
+    cursor: pointer;
+
+    path.fbSavePath {
+      fill: $green;
+    }
+    &:hover {
+      path.fbSavePath {
+        fill: $greenHover;
+      }
+    }
+  }
+
+}

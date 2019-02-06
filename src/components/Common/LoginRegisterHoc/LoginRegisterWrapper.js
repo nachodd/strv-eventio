@@ -4,12 +4,12 @@ import LoginRegisterHOC from "./LoginRegisterHoc"
 import Logo from '~/Common/Logo/Logo'
 import SidePanel from '~/Common/SidePanel/SidePanel'
 import HeadSingUpIn from '~/Common/HeadSingUpIn/HeadSingUpIn'
-import ContentContainer from '~/Common/FormContainer/FormContainer'
+import FormContainer from '~/Common/FormContainer/FormContainer'
 import Loading from "~/Common/Loading/Loading"
 import {observer} from 'mobx-react'
-import '~/Login/Login.scss'
-import Login from "../../Login/Login"
-import Register from "../../Register/Register"
+import '~/LoginForm/LoginForm.scss'
+import LoginForm from "~/LoginForm/LoginForm"
+import RegisterForm from "~/RegisterForm/RegisterForm"
 
 
 const LoginRegisterWrapper = observer((props) => {
@@ -38,15 +38,16 @@ const LoginRegisterWrapper = observer((props) => {
       <SidePanel/>
       <HeadSingUpIn type={isLogin ? 'singUp' : 'singIn'}/>
 
-      <ContentContainer
+      <FormContainer
         title={title}
+        subtitle="Enter your details below."
         errorMsg={props.authStore.errorMsg}>
         {
           isLogin
-            ? <Login {...props} />
-            : <Register {...props} />
+            ? <LoginForm {...props} />
+            : <RegisterForm {...props} />
         }
-      </ContentContainer>
+      </FormContainer>
     </div>
   )
 })

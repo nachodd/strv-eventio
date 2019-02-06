@@ -15,11 +15,11 @@ class AuthStore {
   }
   @observable errorMsg = ''
   @observable errorBag = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    repeatPassword: '',
+    firstName: undefined,
+    lastName: undefined,
+    email: undefined,
+    password: undefined,
+    repeatPassword: undefined,
   }
   @computed get error() {
     return this.errorMsg !== ''
@@ -36,20 +36,19 @@ class AuthStore {
   // @action setPasswordType(passwordType) { this.values.passwordType = passwordType }
 
   @action setErrorMsg(errorMsg) { this.values.errorMsg = errorMsg }
-  @action reset() {
+  @action resetForm() {
     this.values.firstName = ''
     this.values.lastName = ''
     this.values.email = ''
     this.values.password = ''
     this.values.repeatPassword = ''
     this.values.passwordType = 'password'
-    this.errorMsg = ''
+    this.clearErrors()
+
   }
   @action login() {
     this.inProgress = true
-    this.errorMsg = ''
-    this.errorBag.email = ''
-    this.errorBag.password = ''
+    this.clearErrors()
     return api.Auth.login(this.values.email, this.values.password)
       .then((resp) => {
         const {id, email, firstName, lastName} = resp
@@ -70,17 +69,40 @@ class AuthStore {
       switch (reqBody.error) {
         case "User.InvalidPassword":
           this.errorMsg = "Oops! That email and password combination is not valid."
+          this.errorBag.email = ''
+          this.errorBag.password = ''
           break;
         case "Validation":
           this.errorMsg = "There was some errors while processing your request"
-          if (reqBody.errors && Array.isArray(reqBody.errors)) {
-            reqBody.errors.forEach((err) => {
-              if (err.context.key && (err.context.key in this.errorBag)) {
-                this.errorBag[err.context.key] = err.message
+          if (reqBody.errors) {
+            if (Array.isArray(reqBody.errors)) {
+              reqBody.errors.forEach((err) => {
+                if (err.context.key && (err.context.key in this.errorBag)) {
+                  this.errorBag[err.context.key] = err.message
+                }
+              })
+            } else {
+              // in register, the error comes as object like:
+              // errors: { email: {..}, password: {...} }
+              if (Object.keys(reqBody.errors).length) {
+                const errorFields = Object.keys(reqBody.errors)
+                errorFields.forEach((field) => {
+                  if (field in this.errorBag) {
+                    // if the kind of the error is required, put a custom message (as the original is ugly)
+                    this.errorBag[field] =
+                      reqBody.errors[field].kind === 'required'
+                        ? `Field ${field} is mandatory.`
+                        : reqBody.errors[field].message
+                  }
+                })
               }
-            })
+            }
           }
           break;
+        case "User.Exists":
+          this.errorMsg = "User already taken."
+          this.errorBag.email = ''
+          break
         default:
           this.errorMsg = "There was some errors while processing your request";
           break;
@@ -89,7 +111,7 @@ class AuthStore {
   }
 
   @action register() {
-    debugger
+    this.clearErrors()
     if (this.values.password !== this.values.repeatPassword) {
       this.errorMsg = "Passwords don't match"
       this.errorBag.password = "Passwords don't match"
@@ -99,12 +121,22 @@ class AuthStore {
     this.inProgress = true
     return api.Auth.register(this.values.firstName, this.values.lastName, this.values.email, this.values.password)
       // must login in order to get the token
-      .then(this.login)
+      .then(action(() => this.login()))
       .catch(action((err) => {
         this.parseErrorMsg(err.response.body)
         throw err
       }))
       .finally(action(() => { this.inProgress = false }))
+  }
+
+  @action
+  clearErrors() {
+    this.errorMsg = undefined
+    this.errorBag.firstName = undefined
+    this.errorBag.lastName = undefined
+    this.errorBag.email = undefined
+    this.errorBag.password = undefined
+    this.errorBag.repeatPassword = undefined
   }
 
   @action logout() {

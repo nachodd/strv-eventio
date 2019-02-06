@@ -9,6 +9,7 @@ import authStore from 'stores/authStore';
 import commonStore from 'stores/commonStore';
 import userStore from 'stores/userStore';
 import eventStore from 'stores/eventStore';
+import {BrowserRouter as Router} from "react-router-dom"
 
 WebFont.load({
   google: {
@@ -30,7 +31,9 @@ const stores = {
 
 ReactDOM.render((
   <Provider {...stores}>
-    <App />
+    <Router basename="/">
+      <App />
+    </Router>
   </Provider>
   ), document.getElementById('root'));
 

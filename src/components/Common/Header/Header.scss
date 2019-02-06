@@ -21,6 +21,7 @@ nav {
     justify-content: center;
     align-self: center;
     font-size: 16px;
+    color: $darkTeal;
     >span {
       display: flex;
       align-self: center;
@@ -60,6 +61,18 @@ nav {
     }
     .nav-user_name {
       font-size: 16px;
+    }
+  }
+
+  .nav-close_event {
+    justify-content: flex-end;
+    align-self: center;
+    font-size: 16px;
+    color: $darkTeal;
+    >span {
+      display: flex;
+      align-self: center;
+      cursor: pointer;
     }
   }
 

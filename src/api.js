@@ -107,7 +107,14 @@ const Events = {
     requests.post(`/events/${eventId}/attendees/me`),
   leave: (eventId) =>
     requests.del(`/events/${eventId}/attendees/me`),
+  create: (title, description, startsAt, capacity) =>
+    requests.post(`/events`, {title, description, startsAt, capacity}),
 };
+
+// '': 'Awesome event',
+// '': 'A bunch of people doing awesome stuff',
+// '': '2016-12-08T10:46:33.901Z',
+// '': 50
 
 // const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
 // const omitSlug = article => Object.assign({}, article, { slug: undefined })
@@ -137,29 +144,8 @@ const Events = {
     requests.post('/articles', { article })
 };*/
 
-/*const Comments = {
-  create: (slug, comment) =>
-    requests.post(`/articles/${slug}/comments`, { comment }),
-  delete: (slug, commentId) =>
-    requests.del(`/articles/${slug}/comments/${commentId}`),
-  forArticle: slug =>
-    requests.get(`/articles/${slug}/comments`)
-};*/
-
-/*const Profile = {
-  follow: username =>
-    requests.post(`/profiles/${username}/follow`),
-  get: username =>
-    requests.get(`/profiles/${username}`),
-  unfollow: username =>
-    requests.del(`/profiles/${username}/follow`)
-};*/
 
 export default {
-  // Articles,
   Auth,
   Events,
-  // Comments,
-  // Profile,
-  // Tags,
 };

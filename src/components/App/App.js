@@ -29,14 +29,14 @@ class App extends Component {
       if (this.props.commonStore.refreshToken) {
         await this.props.userStore.pullUser()
         if (!this.props.userStore.currentUser) {
-          // this.props.history.replace('/login')
+          this.props.history.replace('/login')
         } else {
           // user exists, gonna be redirected so change the background
           document.body.classList.remove('white');
           document.body.classList.add('gray');
         }
       } else {
-        // this.props.history.replace('/login')
+        this.props.history.replace('/login')
       }
     } catch (e) {
       this.props.history.replace('/login')

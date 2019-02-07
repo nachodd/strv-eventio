@@ -6,7 +6,7 @@
   flex-direction: column;
   height: calc(100vh - 74px);
   position: absolute;
-  z-index: -1;
+  z-index: 0;
 
   @include breakpoint('MEDIUM') {
     width: 100%;

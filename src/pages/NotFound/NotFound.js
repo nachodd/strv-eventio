@@ -6,14 +6,14 @@ import FormContainer from "@comp/Common/FormContainer/FormContainer"
 import Button from "@comp/Common/Button/Button"
 import Header from '@comp/Common/Header/Header'
 import Content from "@comp/Common/Content/Content"
+import './NotFound.scss'
 
 const NotFound = () => {
 
   return (
     <div className="notfound_container">
       <Header page="not_found"/>
-      {/*<Logo/>*/}
-      {/*<HeadSingUpIn type="singIn"/>*/}
+
       <TrooperBackground/>
       <SidePanel/>
 

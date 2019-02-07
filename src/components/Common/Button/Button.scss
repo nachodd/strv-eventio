@@ -19,13 +19,17 @@
   }
 
   @include breakpoint('MEDIUM') {
-    margin: 20px auto;
+    /*margin: 20px auto;*/
   }
 
   &.darkTeal {
     background: $darkTeal;
     &:hover {
       background: darken($darkTeal, 10%);
+    }
+    &:disabled {
+      background: lighten($darkTeal, 10%);
+      cursor: not-allowed;
     }
   }
 
@@ -35,6 +39,10 @@
     &:hover {
       background: $grayButtonHover;
     }
+    &:disabled {
+      background: lighten($lightGray, 10%);
+      cursor: not-allowed;
+    }
   }
 
   &.green {
@@ -42,12 +50,20 @@
     &:hover {
       background: $greenHover;
     }
+    &:disabled {
+      background: lighten($green, 10%);
+      cursor: not-allowed;
+    }
   }
 
   &.red {
     background: $redButton;
     &:hover {
       background: $redButtonHover;
+    }
+    &:disabled {
+      background: lighten($redButton, 10%);
+      cursor: not-allowed;
     }
   }
 

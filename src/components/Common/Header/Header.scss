@@ -1,5 +1,13 @@
 @import '@assets/styles/global.scss';
 
+
+header {
+  /*position: fixed;*/
+  /*width: 100%;*/
+  z-index: 2;
+  flex: none;
+  flex-grow: 2;
+}
 nav {
   display: flex;
   flex-direction: row;
@@ -14,7 +22,17 @@ nav {
   .nav_logo {
     font-size: 2.5rem;
     font-weight: 900;
-    color: $black;
+    user-select: none;
+
+    .black {
+      color: $black;
+    }
+    .blackOrWhite {
+      color: $white;
+      @include breakpoint('MEDIUM') {
+        color: $black;
+      }
+    }
   }
 
   .nav_back {
@@ -32,7 +50,9 @@ nav {
   .nav-user_container {
     justify-content: flex-end;
     align-self: center;
+    align-items: center;
     color: $grayMedium;
+    padding-right: 38px;
 
     a, a:visited, p {
       color: $grayMedium;
@@ -61,6 +81,9 @@ nav {
     }
     .nav-user_name {
       font-size: 16px;
+      @include breakpoint('MEDIUM') {
+        display: none !important;
+      }
     }
   }
 
@@ -89,7 +112,7 @@ nav {
       z-index: 1;
       border-radius: 15px;
       margin-top: 10px;
-      right: -12px;
+      right: -30px;
       width: 193px;
 
       >p, >a {
@@ -116,12 +139,29 @@ nav {
     &:hover .dropdown-content {
       display: block;
     }
+  }
 
+
+  .nav-singupin-wrapper {
+    color: $inputGray;
+    font-size: 14px;
+    flex-direction: row-reverse;
+    align-items: center;
+
+    a {
+      font-weight: bolder;
+      color: $grayMedium;
+    }
+
+    @include breakpoint('MEDIUM') {
+      display: none;
+    }
   }
 
 }
 
 
+/*
 
 .arrow_box {
   position: relative;
@@ -151,4 +191,5 @@ nav {
   border-width: 36px;
   margin-left: -36px;
 }
+*/
 

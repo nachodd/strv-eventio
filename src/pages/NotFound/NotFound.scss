@@ -1,0 +1,10 @@
+@import '@assets/styles/global.scss';
+
+
+div.notfound_container {
+  display: flex;
+  height: 100%;
+  flex-flow: column nowrap;
+  flex-direction: column;
+  background-color: $white;
+}

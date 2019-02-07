@@ -1,14 +1,12 @@
 import React from 'react'
-import './EventItemList.scss'
+import './EventListItem.scss'
 import Card from '../Common/Card/Card'
 import Button from '../Common/Button/Button'
 import moment from 'moment'
 import {inject} from "mobx-react"
 
-/*(observer((props) => {
-  // ...
-}));*/
-const EventItemList = inject("eventStore")(({eventItem, viewMode, buttonType, eventStore}) => {
+
+const EventListItem = inject("eventStore")(({eventItem, viewMode, buttonType, eventStore}) => {
 
   const eventDate =
     moment(new Date(eventItem.startsAt))
@@ -69,24 +67,52 @@ const EventItemList = inject("eventStore")(({eventItem, viewMode, buttonType, ev
       </div>
     </Card>
     ) : (
-    <Card className="card">
-      <div className="cardContent">
-        <div className="title">{eventItem.title}</div>
-        <div className="description">{eventItem.description}</div>
-        <div className="owner">{eventItem.owner.firstName} {eventItem.owner.lastName}</div>
-        <div className="date">{eventDate}</div>
-        <div className="attendeeCont">
-          <div>
-            {eventItem.attendees.length} of {eventItem.capacity}
+
+    <div>
+      <Card className="card-row">
+        <div className="cardContent">
+          <div className="title">{eventItem.title}</div>
+          <div className="description">{eventItem.description}</div>
+          <div className="owner">{eventItem.owner.firstName} {eventItem.owner.lastName}</div>
+          <div className="date">{eventDate}</div>
+          <div className="attendeeCont">
+            <div>
+              {eventItem.attendees.length} of {eventItem.capacity}
+            </div>
+          </div>
+          <div className="buttonCont">
+            { button }
           </div>
         </div>
-        <div className="buttonCont">
-          { button }
+      </Card>
+
+      <Card className="card narrow">
+        <div className="cardContent">
+          <div className="title"><span>{eventItem.title}</span></div>
+          <div className="description"><span>{eventItem.description}</span></div>
+        </div>
+        <div className="cardFooter">
+          <div className="cardFooterCont">
+            <div className="attendeeCont">
+              <div className="date"><span>{eventDate}</span></div>
+              <div className="attendeeContAux">
+                <div>
+                  {eventItem.attendees.length} of {eventItem.capacity}
+                </div>
+              </div>
+            </div>
+            <div className="buttonCont">
+              { button }
+            </div>
+          </div>
         </div>
 
-      </div>
-    </Card>
+      </Card>
+    </div>
+
+
+
   )
 })
 
-export default EventItemList
+export default EventListItem

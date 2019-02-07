@@ -13,76 +13,81 @@
 .form-field {
   display: block;
   margin-bottom: 16px;
-}
-.form-field__label {
-  @include label-active();
-  text-align: left;
-  font-family: "Hind", sans-serif;
-  display: block;
-  font-weight: normal;
-  /*left: 0;*/
-  /*margin: 0;*/
-  padding-top: 18px;
-  position: absolute;
-  top: 0;
-  transition: all $animation-duration;
-  width: 100%;
-  color: $primary-color;
-}
-.form-field__control {
-  background: transparent;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-}
-.form-field__error {
-  color: $error-color;
-  margin-top: 10px;
-}
 
-.form-field__input,
-.form-field__textarea {
-  font-family: "Hind", sans-serif;
-  appearance: none;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid $primary-color;
-  color: $darkTeal;
-  font-size: 18px;
-  margin-top: 24px;
-  outline: 0;
-  padding-bottom: 7px;
-  width: 100%;
-  &.error {
-    border-bottom-color: $error-color;
+  .form-field_label {
+    @include label-active();
+    text-align: left;
+    font-family: "Hind", sans-serif;
+    display: block;
+    font-weight: normal;
+    padding-top: 23px;
+    position: absolute;
+    top: 0;
+    transition: all $animation-duration;
+    width: 100%;
+    color: $inputGray;
   }
+  .form-field_control {
+    background: transparent;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
 
-  // IE 10-11
-  &:-ms-input-placeholder {
-    ~ .form-field__label {
-      @include label-inactive();
+    .form-field_reveal {
+      position: relative;
+      top: -30px;
+      float: right;
+      cursor: pointer;
     }
-  }
-  // All other browsers except Edge
-  &:placeholder-shown {
-    ~ .form-field__label {
-      @include label-inactive();
-    }
-  }
-  &:focus {
-    ~ .form-field__label {
-      color: $primary-color;
-      @include label-active();
-    }
-    ~ .form-field__bar {
-      border-bottom: 2px solid $primary-color;
+
+    .form-field_input {
+      font-family: "Hind", sans-serif;
+      appearance: none;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid $inputGray;
+      color: $darkTeal;
+      font-size: 18px;
+      margin-top: 24px;
+      outline: 0;
+      padding-bottom: 7px;
+      width: 100%;
       &.error {
         border-bottom-color: $error-color;
       }
-      transform: scaleX(150);
+
+      // other browsers
+      &:placeholder-shown {
+        ~ .form-field_label {
+          @include label-inactive();
+        }
+      }
+      // IE 10-11
+      &:-ms-input-placeholder {
+        ~ .form-field_label {
+          @include label-inactive();
+        }
+      }
+
+      &:focus {
+        ~ .form-field_label {
+          color: $inputGray;
+          @include label-active();
+        }
+        /*~ .form-field_bar {
+          border-bottom: 2px solid $inputGray;
+          &.error {
+            border-bottom-color: $error-color;
+          }
+          transform: scaleX(150);
+        }*/
+      }
     }
+
   }
-}
-.form-field__textarea {
-  height: 150px;
+  .form-field_error {
+    color: $error-color;
+    margin-top: 10px;
+  }
+
 }

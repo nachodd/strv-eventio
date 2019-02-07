@@ -4,9 +4,9 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 74px);
   position: absolute;
-  top: 0;
+  z-index: -1;
 
   @include breakpoint('MEDIUM') {
     width: 100%;

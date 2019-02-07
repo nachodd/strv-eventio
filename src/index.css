@@ -13,10 +13,10 @@ body {
 }
 
 body.white {
-    background: #fff;
+    background-color: #fff;
 }
 body.gray {
-    background: #F9F9FB;
+    background-color: #F9F9FB;
 }
 
 

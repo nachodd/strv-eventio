@@ -4,15 +4,15 @@ import Input from "../Common/Input/Input"
 import LoginRegisterHOC from '../Common/LoginRegisterHoc/LoginRegisterHoc'
 import './RegisterForm.scss'
 import {observer} from 'mobx-react'
+import {Link} from "react-router-dom"
 
 const RegisterForm = observer((props) => {
 
   const { values, inProgress, errorBag } = props.authStore
   const { handleInputChange, handleSubmitForm } = props
-  console.log("inprogress", inProgress)
 
   return (
-    <form className="loginRegisterForm" onSubmit={(e) => handleSubmitForm(e, 'register')}>
+    <form className="login-register_form" onSubmit={(e) => handleSubmitForm(e, 'register')}>
       <Input label="First name" name="firstName"
              type="text"
              change={handleInputChange}
@@ -38,9 +38,16 @@ const RegisterForm = observer((props) => {
              change={handleInputChange}
              value={values.repeatPassword}
              errorMsg={errorBag.repeatPassword}/>
-      <Button color="green" type="submit" loadingState={inProgress}>
-        SING UP
-      </Button>
+
+      <div className='login-register_singuplink'>
+        Already have an account? <Link to="/login">SING IN</Link>
+      </div>
+
+      <div className='login-register_button'>
+        <Button color="green" type="submit" loadingState={inProgress}>
+          SING UP
+        </Button>
+      </div>
     </form>
 
   )

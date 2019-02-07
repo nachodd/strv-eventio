@@ -1,0 +1,13 @@
+@import '@assets/styles/global.scss';
+
+
+.create-event .form-container {
+  justify-content: center;
+  padding-left: 0 !important;
+
+  > .cont {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+}

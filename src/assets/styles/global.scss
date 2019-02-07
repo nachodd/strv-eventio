@@ -17,7 +17,7 @@ $dateGray: #CACDD0;
 $authorCement: #7D7878;
 $redButton: #FF4081;
 $redButtonHover: #E73370;
-$primary-color: #C9CED3;
+$inputGray: #C9CED3;
 $error-color: #FF558F;
 $animation-duration: 0.2s;
 
@@ -41,5 +41,16 @@ BREAKPOINTS
   }
   @else if $point == 'XSMALL' {
     @media (max-width: 425px)  { @content ; }
+  }
+}
+
+@mixin breakpoint-height() {
+  @media (max-height: 672px)  { @content ; }
+}
+
+
+@media (max-height: 672px) {
+  .form-container .cont {
+    align-self: flex-start;
   }
 }

@@ -28,7 +28,6 @@ class EventForm extends React.Component {
     this.props.eventStore.setField(e.target.name, e.target.value)
   }
   handleSubmitForm = (e) => {
-    debugger
     e.preventDefault();
     this.props.eventStore.createEvent()
       .then(() => {

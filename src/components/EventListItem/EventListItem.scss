@@ -1,0 +1,128 @@
+@import '@assets/styles/global.scss';
+
+
+.card,
+.card-row {
+  .date {
+    font-size: 14px;
+    color: $dateGray;
+  }
+  .title {
+    font-size: 20px;
+    color: $darkTeal;
+  }
+  .owner {
+    font-size: 16px;
+    color: $authorCement;
+    margin-bottom: 15px;
+  }
+  .description {
+    font-size: 16px;
+    color: $grayMedium;
+  }
+}
+
+
+
+.card {
+  flex-direction: column;
+
+  .date {
+    font-size: 14px;
+    color: $dateGray;
+  }
+  .title {
+    font-size: 20px;
+    color: $darkTeal;
+  }
+  .owner {
+    font-size: 16px;
+    color: $authorCement;
+    margin-bottom: 15px;
+  }
+  .description {
+    font-size: 16px;
+    color: $grayMedium;
+  }
+
+  .cardContent {
+  }
+
+  .cardFooter {
+    flex: 1;
+    display: flex;
+
+    .cardFooterCont {
+      display: flex;
+      flex: 1;
+      align-self: flex-end;
+    }
+
+    .attendeeCont,
+    .buttonCont {
+      display: flex;
+      flex: 1;
+      align-self: center;
+    }
+
+    .attendeeCont {
+    }
+    .buttonCont {
+      justify-content: flex-end;
+    }
+  }
+
+}
+
+.card-row {
+  @include breakpoint('MEDIUM') {
+    display: none !important;
+  }
+
+  .cardContent {
+    display: grid;
+    grid-template-columns: 2fr 3fr 1.5fr 2fr 1fr minmax(110px, 1fr);
+    grid-gap: 10px;
+    align-items: center;
+    > div {
+      padding: 0 4px;
+    }
+  }
+}
+
+.card-row {
+  .description,
+  .date,
+  .title,
+  .owner,
+  .attendeeCont,
+  .buttonCont {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.card.narrow {
+  display: none;
+  @include breakpoint('MEDIUM') {
+    display: flex;
+  }
+  .description {
+    font-size: 18px;
+  }
+
+  .attendeeCont {
+    flex-direction: column;
+    font-size: 16px;
+    color: $grayMedium;
+    font-weight: 400;
+  }
+  .attendeeContAux {
+    display: flex;
+  }
+
+  .tableStyle & {
+    padding: 15px 15px !important;
+  }
+}

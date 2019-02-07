@@ -1,19 +1,18 @@
 import React from 'react'
 import {inject, observer} from "mobx-react"
 import {withRouter} from "react-router-dom"
-import Header from "../Common/Header/Header"
-import './EventList.scss'
-import Loading from "../Common/Loading/Loading"
-import EventsHeader from '../EventsHeader/EventsHeader'
-import EventItemList from '../EventItemList/EventItemList'
-import FloatingButton from "../Common/FloatingButton/FloatingButton"
-
+import Header from "../../components/Common/Header/Header"
+import './Events.scss'
+import Loading from "@comp/Common/Loading/Loading"
+import EventsHeader from '@comp/EventsHeader/EventsHeader'
+import EventItemList from '@comp/EventListItem/EventListItem'
+import FloatingButton from "@comp/Common/FloatingButton/FloatingButton"
 
 
 @inject('eventStore', 'userStore')
 @withRouter
 @observer
-class EventList extends React.Component {
+class Events extends React.Component {
 
   componentWillMount() {
     document.body.classList.add('gray');
@@ -91,4 +90,4 @@ class EventList extends React.Component {
 }
 
 
-export default EventList;
+export default Events;

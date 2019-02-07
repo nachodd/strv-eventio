@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-// import '../../LoginForm/LoginForm.scss'
+
 
 export default function LoginRegisterHOC (LoginRegisterForm) {
 
@@ -10,27 +10,14 @@ export default function LoginRegisterHOC (LoginRegisterForm) {
   @observer
   class LoginRegisterHoc extends React.Component {
 
-    componentWillMount() {
-      // fix for body background
-      document.body.classList.remove('gray');
-      document.body.classList.add('white');
-    }
-
     componentWillUnmount() {
       this.props.authStore.resetForm();
-    }
-
-    componentDidMount() {
-      // this.props.authStore.setField("firstName", "Nacho");
-      // this.props.authStore.setField("lastName", "Durand");
-      // this.props.authStore.setField("email", "nachodurand@gmail.com");
-      // this.props.authStore.setField("password", "32658999");
-      // this.props.authStore.setField("repeatPassword", "3265899");
     }
 
     handleInputChange = e => {
       this.props.authStore.setField(e.target.name, e.target.value)
     }
+
     handleSubmitForm = (e, action) => {
       e.preventDefault();
       this.props.authStore[action]()
@@ -40,21 +27,20 @@ export default function LoginRegisterHOC (LoginRegisterForm) {
         .catch(e => console.log(e));
     };
 
+    handlePasswordRevealer = () => {
+      this.props.authStore.togglePasswordRevealed()
+    }
+
     render() {
       return (
         <LoginRegisterForm
           {...this.props}
           handleInputChange={this.handleInputChange}
-          handleSubmitForm={this.handleSubmitForm} />
+          handleSubmitForm={this.handleSubmitForm}
+          handlePasswordRevealer={this.handlePasswordRevealer}/>
       )
     }
   }
 
   return LoginRegisterHoc
-
 }
-
-
-
-
-// export default LoginRegisterHoc

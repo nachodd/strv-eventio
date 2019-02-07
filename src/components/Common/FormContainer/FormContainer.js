@@ -1,11 +1,10 @@
 import React from 'react'
 import './FormContainer.scss'
 
-// agregarle los estilos de title y content
 const FormContainer = ({title, subtitle, errorMsg, children}) => {
 
   return (
-    <div className="FormContainer">
+    <div className="form-container">
       <div className="cont">
           <div className="title">{title}</div>
           <div className="content">

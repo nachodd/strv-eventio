@@ -1,29 +1,39 @@
 @import '@assets/styles/global.scss';
 
-.FormContainer {
+.form-container {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  margin-left: 577px;
+  align-items: center;
+  flex-direction: row;
+  height: calc(100vh - 74px); /* 74px = height of the header */
+  padding-left: 577px;
   text-align: left;
+  z-index: 1;
+  min-width: 395px;
 
   @include breakpoint('LARGE') {
-    width: 100%;
-    margin-left: initial;
+    padding-left: 480px;
+  }
+  @include breakpoint('MEDIUM') {
+    padding-left: 0;
+    justify-content: center;
   }
 
   .cont {
+    @include breakpoint-height() {
+      align-self: flex-start;
+    }
+
+
     @include breakpoint('LARGE') {
-      align-self: flex-end;
-      margin-right: 50px;
+
     }
     @include breakpoint('MEDIUM') {
       align-self: center;
       margin-right: initial;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      width: 315px;
     }
     .errorMsg {
       color: $error-color;

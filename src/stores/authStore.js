@@ -5,6 +5,7 @@ import commonStore from './commonStore'
 
 class AuthStore {
   @observable inProgress = false
+  @observable passwordRevealed = false
   @observable values = {
     firstName: '',
     lastName: '',
@@ -28,12 +29,9 @@ class AuthStore {
   @action setField(field, value) {
     this.values[field] = value
   }
-
-  // @action setFirstName(firstName) { this.values.firstName = firstName }
-  // @action setLastName(lastName) { this.values.lastName = lastName }
-  // @action setEmail(email) { this.values.email = email }
-  // @action setPassword(password) { this.values.password = password }
-  // @action setPasswordType(passwordType) { this.values.passwordType = passwordType }
+  @action togglePasswordRevealed() {
+    this.passwordRevealed = !this.passwordRevealed
+  }
 
   @action setErrorMsg(errorMsg) { this.values.errorMsg = errorMsg }
   @action resetForm() {

@@ -128,7 +128,17 @@ class EventsStore {
 
   @action createEvent() {
     this.clearErrors()
-    // TODO: validate input
+
+    if (this.newEvent.date.trim() === "" || this.newEvent.time.trim() === "") {
+      this.errorMsg = "Date & Time cannot be empty"
+      this.errorBag.date = "Date & Time cannot be empty"
+      this.errorBag.time = "Date & Time cannot be empty"
+      return Promise.reject("Date & Time cannot be empty");
+    }
+
+    debugger
+
+
     const startsAt = new Date(`${this.newEvent.date} ${this.newEvent.time}`).toISOString();
     this.inProgress = true
     return api.Events.create(this.newEvent.title, this.newEvent.description, startsAt, this.newEvent.capacity)
